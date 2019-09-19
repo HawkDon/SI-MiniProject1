@@ -2,8 +2,8 @@
                   xmlns:gs="http://www.baeldung.com/springsoap/gen">
     <soapenv:Header/>
     <soapenv:Body>
-        <gs:getSoapByIdRequest>
+        <gs:removeSoapByIdRequest>
             <gs:id>1</gs:id>
-        </gs:getSoapByIdRequest>
+        </gs:removeSoapByIdRequest>
     </soapenv:Body>
 </soapenv:Envelope>

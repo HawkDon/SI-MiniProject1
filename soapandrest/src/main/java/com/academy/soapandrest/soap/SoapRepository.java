@@ -1,45 +1,66 @@
 package com.academy.soapandrest.soap;
 
-import com.baeldung.springsoap.gen.Country;
-import com.baeldung.springsoap.gen.Currency;
+import com.baeldung.springsoap.gen.Soap;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @Component
 public class SoapRepository {
-    private static final Map<String, Country> countries = new HashMap<>();
+    private static final HashMap<Integer, Soap> soapRepository = new HashMap<>();
+    private static Integer generatedId = 3;
 
     @PostConstruct
     public void initData() {
-        Country spain = new Country();
-        spain.setName("Spain");
-        spain.setCapital("Madrid");
-        spain.setCurrency(Currency.EUR);
-        spain.setPopulation(46704314);
+        Soap herbalAromatics = new Soap();
+        herbalAromatics.setId(1);
+        herbalAromatics.setName("Herbal Aromatics");
+        herbalAromatics.setDescription("This soap smells very nice.");
+        herbalAromatics.setPrice(23);
 
-        countries.put(spain.getName(), spain);
+        Soap preDeProvince = new Soap();
+        preDeProvince.setId(2);
+        preDeProvince.setName("Pre De Province");
+        preDeProvince.setDescription("This soap is made in France and is very soft.");
+        preDeProvince.setPrice(30);
 
-        Country poland = new Country();
-        poland.setName("Poland");
-        poland.setCapital("Warsaw");
-        poland.setCurrency(Currency.PLN);
-        poland.setPopulation(38186860);
+        Soap melos = new Soap();
+        melos.setId(3);
+        melos.setName("Melos");
+        melos.setDescription("This soap is orange and is very healthy for your skin.");
+        melos.setPrice(25);
 
-        countries.put(poland.getName(), poland);
-
-        Country uk = new Country();
-        uk.setName("United Kingdom");
-        uk.setCapital("London");
-        uk.setCurrency(Currency.GBP);
-        uk.setPopulation(63705000);
-
-        countries.put(uk.getName(), uk);
+        soapRepository.put(herbalAromatics.getId(), herbalAromatics);
+        soapRepository.put(preDeProvince.getId(), preDeProvince);
+        soapRepository.put(melos.getId(), melos);
     }
 
-    public Country findCountry(String name) {
-        return countries.get(name);
+    public void deleteSoap(int id) {
+        soapRepository.remove(id);
+    }
+
+    public List<Soap> getAllSoaps() {
+        List<Soap> soaps = new ArrayList<>();
+        for (Integer key: soapRepository.keySet()) {
+            soaps.add(soapRepository.get(key));
+        }
+        return soaps;
+    }
+
+    public Soap getSoapById(Integer id) {
+        return soapRepository.get(id);
+    }
+
+    public void updateSoap(Soap soap) {
+        soapRepository.replace(soap.getId(), soap);
+    }
+
+    public void addNewSoap(Soap newSoap) {
+        generatedId = generatedId + 1;
+        newSoap.setId(generatedId);
+        soapRepository.put(generatedId, newSoap);
     }
 }

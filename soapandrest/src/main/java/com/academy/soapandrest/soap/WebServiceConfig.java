@@ -22,19 +22,19 @@ public class WebServiceConfig {
         return new ServletRegistrationBean(servlet, "/ws/*");
     }
 
-    @Bean(name = "countries")
-    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema countriesSchema) {
+    @Bean(name = "soaps")
+    public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema soapsSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-        wsdl11Definition.setPortTypeName("CountriesPort");
+        wsdl11Definition.setPortTypeName("SoapsPort");
         wsdl11Definition.setLocationUri("/ws");
         wsdl11Definition.setTargetNamespace("http://www.baeldung.com/springsoap/gen");
-        wsdl11Definition.setSchema(countriesSchema);
+        wsdl11Definition.setSchema(soapsSchema);
         return wsdl11Definition;
     }
 
     @Bean
     public XsdSchema countriesSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("countries.xsd"));
+        return new SimpleXsdSchema(new ClassPathResource("soaps.xsd"));
     }
 
 }
