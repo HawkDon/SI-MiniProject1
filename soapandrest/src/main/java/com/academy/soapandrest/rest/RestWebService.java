@@ -1,4 +1,4 @@
-package com.academy.soapandrest;
+package com.academy.soapandrest.rest;
 
 import com.entities.Animal;
 import org.springframework.web.bind.annotation.*;

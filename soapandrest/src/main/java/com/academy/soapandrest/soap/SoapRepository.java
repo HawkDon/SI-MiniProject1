@@ -1,4 +1,4 @@
-package com.academy.soapandrest;
+package com.academy.soapandrest.soap;
 
 import com.baeldung.springsoap.gen.Country;
 import com.baeldung.springsoap.gen.Currency;

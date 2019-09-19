@@ -1,4 +1,4 @@
-package com.academy.soapandrest;
+package com.academy.soapandrest.soap;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;

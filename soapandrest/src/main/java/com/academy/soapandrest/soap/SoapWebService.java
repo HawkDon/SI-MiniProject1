@@ -1,4 +1,4 @@
-package com.academy.soapandrest;
+package com.academy.soapandrest.soap;
 
 import com.baeldung.springsoap.gen.GetCountryRequest;
 import com.baeldung.springsoap.gen.GetCountryResponse;
