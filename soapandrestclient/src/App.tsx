@@ -1,15 +1,55 @@
-import React, { useState } from "react";
+import Button from "@material-ui/core/Button";
+import React from "react";
+import RestModal from "./components/RestModal";
+import SoapModal from "./components/SoapModal";
+import useModal from "./hooks/useModal";
+import useScreenSize from "./hooks/useScreenSize";
 
 const App: React.FC = () => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const windowWidth = useScreenSize(window.innerWidth, "width");
+  const windowHeight = useScreenSize(window.innerHeight, "height");
 
-  React.useEffect(() => {
-    const resizeListener = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", resizeListener);
+  const [soapModal, handleOpenSoapModal, handleCloseSoapModal] = useModal();
+  const [restModal, handleOpenRestModal, handleCloseRestModal] = useModal();
 
-    return () => window.removeEventListener("resize", resizeListener);
-  }, [windowWidth]);
-  return <div style={{ width: windowWidth }}>{windowWidth}</div>;
+  return (
+    <div
+      style={{
+        width: windowWidth,
+        height: windowHeight,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+      }}
+    >
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleOpenSoapModal}
+        >
+          SOAP
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleOpenRestModal}
+        >
+          REST
+        </Button>
+      </div>
+      <SoapModal
+        title="SOAP Store"
+        modalState={soapModal}
+        handleClose={handleCloseSoapModal}
+      />
+      <RestModal
+        title="REST Store"
+        modalState={restModal}
+        handleClose={handleCloseRestModal}
+      />
+    </div>
+  );
 };
 
 export default App;
