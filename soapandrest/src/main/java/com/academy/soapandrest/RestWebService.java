@@ -1,13 +1,41 @@
 package com.academy.soapandrest;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.entities.Animal;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class RestWebService {
 
-    @RequestMapping("/hello")
-    public String findAll() {
-        return "Hello World";
+    private RestRepository restRepository;
+
+    public RestWebService(RestRepository restRepository) {
+        this.restRepository = restRepository;
+    }
+
+    @RequestMapping("/rest/getAllAnimals")
+    public List<Animal> findAll() {
+        return restRepository.getAllAnimals();
+    }
+
+    @RequestMapping("/rest/getAnimal/{id}")
+    public Animal getAnimal(@PathVariable("id") Integer id) {
+        return restRepository.getAnimalById(id);
+    }
+
+    @RequestMapping(value = "/rest/deleteAnimal/{id}", method = RequestMethod.DELETE)
+    public void deleteAnimal(@PathVariable("id") Integer id) {
+        restRepository.deleteAnimal(id);
+    }
+
+    @RequestMapping( value = "/rest/addAnimal", method = RequestMethod.POST)
+    public void addAnimal(@RequestBody Animal animal) {
+        restRepository.addNewAnimal(animal);
+    }
+
+    @RequestMapping( value = "/rest/updateAnimal", method = RequestMethod.PUT)
+    public void updateAnimal(@RequestBody Animal animal) {
+        restRepository.updateAnimal(animal);
     }
 }
