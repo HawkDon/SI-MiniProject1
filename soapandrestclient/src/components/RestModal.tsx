@@ -1,6 +1,7 @@
 import { Grid } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import React from "react";
+import { fetchAllAnimals, IAnimal } from "../services/Rest";
 import Content from "./Content";
 
 interface Props {
@@ -9,23 +10,13 @@ interface Props {
   title: string;
 }
 
-const dummyData = [
-  {
-    id: 1,
-    name: "white soap",
-    description: "This is a white soap",
-    price: 14
-  },
-  { id: 2, name: "black soap", description: "This is a black soap", price: 17 },
-  {
-    id: 3,
-    name: "yellow soap",
-    description: "This is a yellow soap",
-    price: 20
-  }
-];
-
 const RestModal: React.FC<Props> = ({ handleClose, modalState, title }) => {
+  const [animals, setAnimals] = React.useState<IAnimal[]>([]);
+
+  React.useEffect(() => {
+    fetchAllAnimals().then(res => setAnimals(res));
+  }, []);
+
   return (
     <Modal
       aria-labelledby="simple-modal-title"
@@ -44,7 +35,7 @@ const RestModal: React.FC<Props> = ({ handleClose, modalState, title }) => {
           <Grid item xs={6} sm={6}>
             <h2>{title}</h2>
           </Grid>
-          <Content items={dummyData} />
+          {animals.length !== 0 && <Content items={animals} />}
         </Grid>
       </Grid>
     </Modal>

@@ -4,6 +4,7 @@ import RestModal from "./components/RestModal";
 import SoapModal from "./components/SoapModal";
 import useModal from "./hooks/useModal";
 import useScreenSize from "./hooks/useScreenSize";
+import { fetchAllAnimals } from "./services/Rest";
 
 const App: React.FC = () => {
   const windowWidth = useScreenSize(window.innerWidth, "width");
@@ -11,7 +12,6 @@ const App: React.FC = () => {
 
   const [soapModal, handleOpenSoapModal, handleCloseSoapModal] = useModal();
   const [restModal, handleOpenRestModal, handleCloseRestModal] = useModal();
-
   return (
     <div
       style={{

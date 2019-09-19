@@ -1,7 +1,9 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
+import { IAnimal } from "../services/Rest";
+import { ISoap } from "../services/Soap";
 
-interface Item {
+export interface Item {
   id: number;
   name: string;
   description: string;
@@ -9,16 +11,16 @@ interface Item {
 }
 
 interface Props {
-  items: Item[];
+  items: IAnimal[] | ISoap[];
 }
 
 const Content: React.FC<Props> = ({ items }) => {
   return (
     <Grid container justify="center" direction="column">
-      {items.map(item => (
+      {(items as any).map(item => (
         <Grid item key={item.id}>
-          ID: {item.id} Name: {item.name} description: {item.description} price:{" "}
-          {item.price}
+          ID: {item.id} Name: {item.name} description: {item.description} Sleep:{" "}
+          {item.dailySleep}
         </Grid>
       ))}
     </Grid>
