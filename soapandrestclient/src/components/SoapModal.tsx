@@ -1,7 +1,6 @@
 import { Grid } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import React from "react";
-import Content from "./Content";
 
 interface Props {
   modalState: boolean;
@@ -44,7 +43,6 @@ const SoapModal: React.FC<Props> = ({ handleClose, modalState, title }) => {
           <Grid item xs={6} sm={6}>
             <h2>{title}</h2>
           </Grid>
-          <Content items={dummyData} />
         </Grid>
       </Grid>
     </Modal>

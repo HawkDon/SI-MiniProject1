@@ -1,43 +1,56 @@
+import { CardContent, CardHeader, Container } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import { makeStyles } from "@material-ui/styles";
 import React from "react";
 import RestModal from "./components/RestModal";
 import SoapModal from "./components/SoapModal";
 import useModal from "./hooks/useModal";
-import useScreenSize from "./hooks/useScreenSize";
-import { fetchAllAnimals } from "./services/Rest";
 
+const useStyles = makeStyles({
+  header: {
+    display: "flex",
+    justifyContent: "center"
+  },
+  button: {
+    padding: 8,
+    margin: 8
+  },
+  content: {
+    display: "flex",
+    justifyContent: "space-between"
+  }
+});
 const App: React.FC = () => {
-  const windowWidth = useScreenSize(window.innerWidth, "width");
-  const windowHeight = useScreenSize(window.innerHeight, "height");
-
+  const classes = useStyles();
   const [soapModal, handleOpenSoapModal, handleCloseSoapModal] = useModal();
   const [restModal, handleOpenRestModal, handleCloseRestModal] = useModal();
   return (
-    <div
-      style={{
-        width: windowWidth,
-        height: windowHeight,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-      }}
-    >
-      <div>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleOpenSoapModal}
-        >
-          SOAP
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleOpenRestModal}
-        >
-          REST
-        </Button>
-      </div>
+    <Container maxWidth="sm">
+      <Card>
+        <CardHeader
+          classes={{ content: classes.header }}
+          title="SI-MiniProject1"
+        />
+        <CardContent className={classes.content}>
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="primary"
+            onClick={handleOpenSoapModal}
+          >
+            SOAP
+          </Button>
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="primary"
+            onClick={handleOpenRestModal}
+          >
+            REST
+          </Button>
+        </CardContent>
+      </Card>
       <SoapModal
         title="SOAP Store"
         modalState={soapModal}
@@ -48,7 +61,7 @@ const App: React.FC = () => {
         modalState={restModal}
         handleClose={handleCloseRestModal}
       />
-    </div>
+    </Container>
   );
 };
 
