@@ -12,18 +12,19 @@ The client is written with ReactJS and TypeScript. It makes calls to get data fr
 
 The whole project is a simple crud application to demonstrate Soap and Rest in practice with a frontend.
 
-## installation instructions
+## Installation instructions
 
-Pre requirement:
-Install jdk-8
-Install node & npm
+### Pre requirement:
+* Have jdk-8 installed
+* Have noda & npm installed
 
-Instructions:
+### Instructions:
 
-Backend:
+#### Backend:
 1. cd into ./soapandrest
 2. Build and run the jar
 
+#### Frontend:
 1. cd into ./soapandrestclient
 2. npm install
 3. npm start
