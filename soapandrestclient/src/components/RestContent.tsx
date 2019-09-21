@@ -16,7 +16,11 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FolderIcon from "@material-ui/icons/Folder";
 import UpdateIcon from "@material-ui/icons/Update";
 import React from "react";
-import { AnimalActions } from "../actions/animalActions";
+import {
+  AnimalActions,
+  changeAnimalReducer,
+  initialAnimalState
+} from "../actions/animalActions";
 import {
   addNewAnimal,
   deleteAnimal,
@@ -37,13 +41,6 @@ interface Props {
   dispatch: React.Dispatch<AnimalActions>;
 }
 
-export const initialAnimalState: IAnimal = {
-  id: -1,
-  name: "",
-  description: "",
-  dailySleep: "" as any
-};
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     buttonContainer: {
@@ -63,7 +60,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const RestContent: React.FC<Props> = ({ animals, dispatch }) => {
   const classes = useStyles();
-  const [animal, setAnimal] = React.useState<IAnimal>(initialAnimalState);
+  const [animal, dispatchAnimal] = React.useReducer(
+    changeAnimalReducer,
+    initialAnimalState
+  );
   const [isNewAnimal, setIsNewAnimal] = React.useState(false);
 
   const handleDeleteAnimal = (id: number) => {
@@ -75,44 +75,51 @@ const RestContent: React.FC<Props> = ({ animals, dispatch }) => {
   const handleUpdateAnimal = () => {
     updateAnimal(animal)
       .then(() => dispatch({ type: "UPDATE_ANIMAL", payload: animal }))
-      .then(() => setAnimal(initialAnimalState));
+      .then(() => dispatchAnimal({ type: "RESET" }))
+      .then(() => setIsNewAnimal(false));
   };
 
   const handleAddAnimal = () => {
     addNewAnimal(animal)
       .then(() => dispatch({ type: "ADD_ANIMAL", payload: animal }))
-      .then(() => setAnimal(initialAnimalState));
-  };
-
-  const handleChangeAnimal = e => {
-    const target = e.target;
-    setAnimal(prev => {
-      prev[target.id] = target.value;
-      return { ...prev };
-    });
+      .then(() => dispatchAnimal({ type: "RESET" }))
+      .then(() => setIsNewAnimal(false));
   };
 
   const handleNewAnimalTransition = () => {
+    dispatchAnimal({
+      type: "CHANGE_ANIMAL",
+      payload: { ...initialAnimalState, id: 0 }
+    });
     setIsNewAnimal(true);
-    setAnimal({ ...initialAnimalState, id: 0 });
+  };
+
+  const handleUpdateAnimalTransition = (animal: IAnimal) => {
+    dispatchAnimal({ type: "CHANGE_ANIMAL", payload: animal });
+    setIsNewAnimal(false);
+  };
+
+  const handleCancel = () => {
+    dispatchAnimal({ type: "RESET" });
+    setIsNewAnimal(false);
   };
 
   return animal.id === -1 ? (
     <React.Fragment>
       <List>
-        {animals.map(animal => (
-          <ListItem key={animal.id}>
+        {animals.map(ani => (
+          <ListItem key={ani.id}>
             <ListItemAvatar>
               <Avatar>
                 <FolderIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={animal.name} />
+            <ListItemText primary={ani.name} />
             <ListItemSecondaryAction>
-              <IconButton onClick={() => setAnimal(animal)}>
+              <IconButton onClick={() => handleUpdateAnimalTransition(ani)}>
                 <UpdateIcon />
               </IconButton>
-              <IconButton onClick={() => handleDeleteAnimal(animal.id)}>
+              <IconButton onClick={() => handleDeleteAnimal(ani.id)}>
                 <DeleteIcon />
               </IconButton>
             </ListItemSecondaryAction>
@@ -133,18 +140,18 @@ const RestContent: React.FC<Props> = ({ animals, dispatch }) => {
     </React.Fragment>
   ) : isNewAnimal ? (
     <RestForm
-      setAnimal={setAnimal}
       handleServerAction={handleAddAnimal}
-      handleChangeAnimal={handleChangeAnimal}
       animal={animal}
+      dispatchAnimal={dispatchAnimal}
+      handleCancel={handleCancel}
       title="Add"
     />
   ) : (
     <RestForm
-      setAnimal={setAnimal}
       handleServerAction={handleUpdateAnimal}
-      handleChangeAnimal={handleChangeAnimal}
       animal={animal}
+      dispatchAnimal={dispatchAnimal}
+      handleCancel={handleCancel}
       title="Update"
     />
   );

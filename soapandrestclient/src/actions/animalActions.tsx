@@ -25,3 +25,37 @@ export const animalReducer = (state: IAnimal[], action: AnimalActions) => {
       return state;
   }
 };
+
+export const initialAnimalState: IAnimal = {
+  id: -1,
+  name: "",
+  description: "",
+  dailySleep: "" as any
+};
+
+export type ChangeAnimalActions =
+  | { type: "RESET" }
+  | { type: "CHANGE_NAME"; payload: string }
+  | { type: "CHANGE_DESCRIPTION"; payload: string }
+  | { type: "CHANGE_DAILY_SLEEP"; payload: number }
+  | { type: "CHANGE_ANIMAL"; payload: IAnimal };
+
+export const changeAnimalReducer = (
+  state: IAnimal,
+  action: ChangeAnimalActions
+): IAnimal => {
+  switch (action.type) {
+    case "RESET":
+      return initialAnimalState;
+    case "CHANGE_NAME":
+      return { ...state, name: action.payload };
+    case "CHANGE_DESCRIPTION":
+      return { ...state, description: action.payload };
+    case "CHANGE_DAILY_SLEEP":
+      return { ...state, dailySleep: action.payload };
+    case "CHANGE_ANIMAL":
+      return action.payload;
+    default:
+      return state;
+  }
+};

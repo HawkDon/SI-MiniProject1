@@ -6,15 +6,15 @@ import {
   Theme
 } from "@material-ui/core";
 import React from "react";
+import { ChangeAnimalActions } from "../actions/animalActions";
 import { IAnimal } from "../services/Rest";
-import { initialAnimalState } from "./RestContent";
 
 interface Props {
   animal: IAnimal;
-  handleChangeAnimal: (e: any) => void;
   handleServerAction: () => void;
-  setAnimal: React.Dispatch<React.SetStateAction<IAnimal>>;
   title: string;
+  dispatchAnimal: React.Dispatch<ChangeAnimalActions>;
+  handleCancel: () => void;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -39,9 +39,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const RestForm: React.FC<Props> = ({
   animal,
-  handleChangeAnimal,
   handleServerAction,
-  setAnimal,
+  handleCancel,
+  dispatchAnimal,
   title
 }) => {
   const classes = useStyles();
@@ -49,19 +49,31 @@ const RestForm: React.FC<Props> = ({
     <form className={classes.container} noValidate autoComplete="off">
       <TextField
         id="name"
-        onChange={handleChangeAnimal}
+        onChange={e =>
+          dispatchAnimal({ type: "CHANGE_NAME", payload: e.target.value })
+        }
         value={animal.name}
         label="Name"
       />
       <TextField
         id="description"
-        onChange={handleChangeAnimal}
+        onChange={e =>
+          dispatchAnimal({
+            type: "CHANGE_DESCRIPTION",
+            payload: e.target.value
+          })
+        }
         value={animal.description}
         label="Description"
       />
       <TextField
         id="dailySleep"
-        onChange={handleChangeAnimal}
+        onChange={e =>
+          dispatchAnimal({
+            type: "CHANGE_DAILY_SLEEP",
+            payload: e.target.value as any
+          })
+        }
         value={animal.dailySleep}
         label="Daily Sleep"
       />
@@ -78,7 +90,7 @@ const RestForm: React.FC<Props> = ({
           className={classes.button}
           variant="contained"
           color="secondary"
-          onClick={() => setAnimal(initialAnimalState)}
+          onClick={handleCancel}
         >
           Cancel
         </Button>

@@ -8,7 +8,6 @@ import RestContent from "./RestContent";
 interface Props {
   modalState: boolean;
   handleClose: () => void;
-  title: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const RestModal: React.FC<Props> = ({ handleClose, modalState, title }) => {
+const RestModal: React.FC<Props> = ({ handleClose, modalState }) => {
   const classes = useStyles();
   const [animals, dispatch] = React.useReducer(animalReducer, []);
 

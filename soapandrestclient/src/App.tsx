@@ -51,16 +51,8 @@ const App: React.FC = () => {
           </Button>
         </CardContent>
       </Card>
-      <SoapModal
-        title="SOAP Store"
-        modalState={soapModal}
-        handleClose={handleCloseSoapModal}
-      />
-      <RestModal
-        title="REST Store"
-        modalState={restModal}
-        handleClose={handleCloseRestModal}
-      />
+      <SoapModal modalState={soapModal} handleClose={handleCloseSoapModal} />
+      <RestModal modalState={restModal} handleClose={handleCloseRestModal} />
     </Container>
   );
 };
