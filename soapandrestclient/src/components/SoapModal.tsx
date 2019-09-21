@@ -2,6 +2,7 @@ import { Container, createStyles, makeStyles, Theme } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import React from "react";
 import { soapReducer } from "../actions/soapActions";
+import { requestAndResponseFromXML } from "../services/Soap";
 import { getAllSoaps } from "../services/xml/requests";
 
 interface Props {
@@ -29,17 +30,9 @@ const SoapModal: React.FC<Props> = ({ handleClose, modalState }) => {
   const classes = useStyles();
   const [soaps, dispatch] = React.useReducer(soapReducer, []);
   React.useEffect(() => {
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:8080/ws", true);
-    xhr.setRequestHeader("Content-Type", "text/xml");
-    xhr.onreadystatechange = function() {
-      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        const regex = new RegExp("<ns2:soap>|</ns2:soap>");
-        console.log(this.response.split(regex).slice(1, -1));
-      }
-    };
-
-    xhr.send(getAllSoaps);
+    requestAndResponseFromXML(getAllSoaps).then(res =>
+      dispatch({ type: "LOAD_DATA_FROM_SERVER", payload: res })
+    );
   }, [dispatch]);
 
   return (
