@@ -1,32 +1,30 @@
 import {
   Avatar,
   Button,
-  createStyles,
   IconButton,
   List,
   ListItem,
   ListItemAvatar,
   ListItemSecondaryAction,
-  ListItemText,
-  makeStyles,
-  Theme
+  ListItemText
 } from "@material-ui/core";
 import UploadIcon from "@material-ui/icons/CloudUpload";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FolderIcon from "@material-ui/icons/Folder";
 import UpdateIcon from "@material-ui/icons/Update";
 import React from "react";
-import {
-  changeSoapReducer,
-  initialSoapState,
-  SoapActions
-} from "../actions/soapActions";
+import { useContentStyles } from "../../hooks/useStyles";
 import {
   addXmlSoap,
   deleteXmlSoap,
   ISoap,
   updateXmlSoap
-} from "../services/Soap";
+} from "../../services/soap/soapService";
+import {
+  changeSoapReducer,
+  initialSoapState,
+  SoapActions
+} from "../actions/soapActions";
 import SoapForm from "./SoapForm";
 
 interface Props {
@@ -34,25 +32,8 @@ interface Props {
   dispatch: React.Dispatch<SoapActions>;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    buttonContainer: {
-      display: "flex",
-      justifyContent: "center",
-      margin: 8,
-      padding: 8
-    },
-    button: {
-      margin: theme.spacing(1)
-    },
-    icon: {
-      marginLeft: theme.spacing(1)
-    }
-  })
-);
-
 const SoapContent: React.FC<Props> = ({ soaps, dispatch }) => {
-  const classes = useStyles();
+  const classes = useContentStyles();
   const [soap, dispatchSoap] = React.useReducer(
     changeSoapReducer,
     initialSoapState

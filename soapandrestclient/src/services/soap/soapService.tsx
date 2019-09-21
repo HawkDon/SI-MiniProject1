@@ -1,4 +1,4 @@
-import { addSoap, deleteSoap, getAllSoaps, updateSoap } from "./xml/requests";
+import { addSoap, deleteSoap, getAllSoaps, updateSoap } from "./requests";
 
 export interface ISoap {
   id: number;

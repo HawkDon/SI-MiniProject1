@@ -1,8 +1,9 @@
-import { Container, createStyles, makeStyles, Theme } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import React from "react";
+import { useModalStyles } from "../../hooks/useStyles";
+import { getXmlAllSoaps } from "../../services/soap/soapService";
 import { soapReducer } from "../actions/soapActions";
-import { getXmlAllSoaps } from "../services/Soap";
 import SoapContent from "./SoapContent";
 
 interface Props {
@@ -10,24 +11,9 @@ interface Props {
   handleClose: (value: string) => void;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    paper: {
-      position: "absolute",
-      width: 800,
-      backgroundColor: theme.palette.background.paper,
-      border: "2px solid #000",
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3)
-    },
-    title: {
-      textAlign: "center"
-    }
-  })
-);
-
 const SoapModal: React.FC<Props> = ({ handleClose, modalState }) => {
-  const classes = useStyles();
+  const classes = useModalStyles();
+
   const [soaps, dispatch] = React.useReducer(soapReducer, []);
   React.useEffect(() => {
     getXmlAllSoaps().then(res =>

@@ -1,4 +1,4 @@
-import { ISoap } from "../services/Soap";
+import { ISoap } from "../../services/soap/soapService";
 
 export type SoapActions =
   | {

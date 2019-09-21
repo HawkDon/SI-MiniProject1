@@ -1,8 +1,9 @@
-import { Container, createStyles, makeStyles, Theme } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import React from "react";
+import { useModalStyles } from "../../hooks/useStyles";
+import { getAllAnimals } from "../../services/rest/restService";
 import { animalReducer } from "../actions/animalActions";
-import { getAllAnimals } from "../services/Rest";
 import RestContent from "./RestContent";
 
 interface Props {
@@ -10,24 +11,8 @@ interface Props {
   handleClose: () => void;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    paper: {
-      position: "absolute",
-      width: 800,
-      backgroundColor: theme.palette.background.paper,
-      border: "2px solid #000",
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3)
-    },
-    title: {
-      textAlign: "center"
-    }
-  })
-);
-
 const RestModal: React.FC<Props> = ({ handleClose, modalState }) => {
-  const classes = useStyles();
+  const classes = useModalStyles();
   const [animals, dispatch] = React.useReducer(animalReducer, []);
 
   React.useEffect(() => {

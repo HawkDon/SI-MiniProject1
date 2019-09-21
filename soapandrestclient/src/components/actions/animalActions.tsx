@@ -1,4 +1,4 @@
-import { IAnimal } from "../services/Rest";
+import { IAnimal } from "../../services/rest/restService";
 
 export type AnimalActions =
   | {

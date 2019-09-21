@@ -1,4 +1,4 @@
-import { ISoap } from "../Soap";
+import { ISoap } from "./soapService";
 
 export const getAllSoaps = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
 xmlns:gs="http://www.baeldung.com/springsoap/gen">

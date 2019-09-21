@@ -1,81 +1,56 @@
-import {
-  Button,
-  createStyles,
-  makeStyles,
-  TextField,
-  Theme
-} from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import React from "react";
-import { ChangeSoapActions } from "../actions/soapActions";
-import { ISoap } from "../services/Soap";
+import { useFormStyles } from "../../hooks/useStyles";
+import { IAnimal } from "../../services/rest/restService";
+import { ChangeAnimalActions } from "../actions/animalActions";
 
 interface Props {
-  soap: ISoap;
+  animal: IAnimal;
   handleServerAction: () => void;
   title: string;
-  dispatchSoap: React.Dispatch<ChangeSoapActions>;
+  dispatchAnimal: React.Dispatch<ChangeAnimalActions>;
   handleCancel: () => void;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      display: "flex",
-      justifyContent: "center",
-      flexDirection: "column"
-    },
-    buttonContainer: {
-      display: "flex",
-      justifyContent: "center",
-      margin: 8,
-      padding: 8
-    },
-    button: {
-      margin: 8,
-      padding: 8
-    }
-  })
-);
-
-const SoapForm: React.FC<Props> = ({
-  soap,
+const RestForm: React.FC<Props> = ({
+  animal,
   handleServerAction,
   handleCancel,
-  dispatchSoap,
+  dispatchAnimal,
   title
 }) => {
-  const classes = useStyles();
+  const classes = useFormStyles();
   return (
     <form className={classes.container} noValidate autoComplete="off">
       <TextField
         id="name"
         onChange={e =>
-          dispatchSoap({ type: "CHANGE_NAME", payload: e.target.value })
+          dispatchAnimal({ type: "CHANGE_NAME", payload: e.target.value })
         }
-        value={soap.name}
+        value={animal.name}
         label="Name"
       />
       <TextField
         id="description"
         onChange={e =>
-          dispatchSoap({
+          dispatchAnimal({
             type: "CHANGE_DESCRIPTION",
             payload: e.target.value
           })
         }
-        value={soap.description}
+        value={animal.description}
         label="Description"
       />
       <TextField
-        id="price"
+        id="dailySleep"
         onChange={e =>
-          dispatchSoap({
-            type: "CHANGE_PRICE",
+          dispatchAnimal({
+            type: "CHANGE_DAILY_SLEEP",
             payload: e.target.value as any
           })
         }
-        value={soap.price}
-        label="Price"
+        value={animal.dailySleep}
+        label="Daily Sleep"
       />
       <div className={classes.buttonContainer}>
         <Button
@@ -99,4 +74,4 @@ const SoapForm: React.FC<Props> = ({
   );
 };
 
-export default SoapForm;
+export default RestForm;

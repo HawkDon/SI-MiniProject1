@@ -1,32 +1,30 @@
 import {
   Avatar,
   Button,
-  createStyles,
   IconButton,
   List,
   ListItem,
   ListItemAvatar,
   ListItemSecondaryAction,
-  ListItemText,
-  makeStyles,
-  Theme
+  ListItemText
 } from "@material-ui/core";
 import UploadIcon from "@material-ui/icons/CloudUpload";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FolderIcon from "@material-ui/icons/Folder";
 import UpdateIcon from "@material-ui/icons/Update";
 import React from "react";
-import {
-  AnimalActions,
-  changeAnimalReducer,
-  initialAnimalState
-} from "../actions/animalActions";
+import { useContentStyles } from "../../hooks/useStyles";
 import {
   addNewAnimal,
   deleteAnimal,
   IAnimal,
   updateAnimal
-} from "../services/Rest";
+} from "../../services/rest/restService";
+import {
+  AnimalActions,
+  changeAnimalReducer,
+  initialAnimalState
+} from "../actions/animalActions";
 import RestForm from "./RestForm";
 
 export interface Item {
@@ -41,25 +39,8 @@ interface Props {
   dispatch: React.Dispatch<AnimalActions>;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    buttonContainer: {
-      display: "flex",
-      justifyContent: "center",
-      margin: 8,
-      padding: 8
-    },
-    button: {
-      margin: theme.spacing(1)
-    },
-    icon: {
-      marginLeft: theme.spacing(1)
-    }
-  })
-);
-
 const RestContent: React.FC<Props> = ({ animals, dispatch }) => {
-  const classes = useStyles();
+  const classes = useContentStyles();
   const [animal, dispatchAnimal] = React.useReducer(
     changeAnimalReducer,
     initialAnimalState

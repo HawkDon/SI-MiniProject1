@@ -1,28 +1,14 @@
 import { CardContent, CardHeader, Container } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import { makeStyles } from "@material-ui/styles";
 import React from "react";
-import RestModal from "./components/RestModal";
-import SoapModal from "./components/SoapModal";
+import RestModal from "./components/rest/RestModal";
+import SoapModal from "./components/soap/SoapModal";
 import useModal from "./hooks/useModal";
+import { useAppStyles } from "./hooks/useStyles";
 
-const useStyles = makeStyles({
-  header: {
-    display: "flex",
-    justifyContent: "center"
-  },
-  button: {
-    padding: 8,
-    margin: 8
-  },
-  content: {
-    display: "flex",
-    justifyContent: "space-between"
-  }
-});
 const App: React.FC = () => {
-  const classes = useStyles();
+  const classes = useAppStyles();
   const [soapModal, handleOpenSoapModal, handleCloseSoapModal] = useModal();
   const [restModal, handleOpenRestModal, handleCloseRestModal] = useModal();
   return (
