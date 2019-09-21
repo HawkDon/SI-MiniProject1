@@ -2,8 +2,8 @@ import { Container, createStyles, makeStyles, Theme } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import React from "react";
 import { soapReducer } from "../actions/soapActions";
-import { requestAndResponseFromXML } from "../services/Soap";
-import { getAllSoaps } from "../services/xml/requests";
+import { getXmlAllSoaps } from "../services/Soap";
+import SoapContent from "./SoapContent";
 
 interface Props {
   modalState: boolean;
@@ -30,7 +30,7 @@ const SoapModal: React.FC<Props> = ({ handleClose, modalState }) => {
   const classes = useStyles();
   const [soaps, dispatch] = React.useReducer(soapReducer, []);
   React.useEffect(() => {
-    requestAndResponseFromXML(getAllSoaps).then(res =>
+    getXmlAllSoaps().then(res =>
       dispatch({ type: "LOAD_DATA_FROM_SERVER", payload: res })
     );
   }, [dispatch]);
@@ -47,8 +47,7 @@ const SoapModal: React.FC<Props> = ({ handleClose, modalState }) => {
           <h2 className={classes.title} id="simple-modal-title">
             About Soaps
           </h2>
-          <div>Hello</div>
-          {/*<RestContent dispatch={dispatch} animals={animals} />*/}
+          <SoapContent dispatch={dispatch} soaps={soaps} />
         </div>
       </Container>
     </Modal>

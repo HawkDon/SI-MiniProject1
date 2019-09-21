@@ -25,3 +25,37 @@ export const soapReducer = (state: ISoap[], action: SoapActions) => {
       return state;
   }
 };
+
+export const initialSoapState: ISoap = {
+  id: -1,
+  name: "",
+  description: "",
+  price: "" as any
+};
+
+export type ChangeSoapActions =
+  | { type: "RESET" }
+  | { type: "CHANGE_NAME"; payload: string }
+  | { type: "CHANGE_DESCRIPTION"; payload: string }
+  | { type: "CHANGE_PRICE"; payload: number }
+  | { type: "CHANGE_SOAP"; payload: ISoap };
+
+export const changeSoapReducer = (
+  state: ISoap,
+  action: ChangeSoapActions
+): ISoap => {
+  switch (action.type) {
+    case "RESET":
+      return initialSoapState;
+    case "CHANGE_NAME":
+      return { ...state, name: action.payload };
+    case "CHANGE_DESCRIPTION":
+      return { ...state, description: action.payload };
+    case "CHANGE_PRICE":
+      return { ...state, price: action.payload };
+    case "CHANGE_SOAP":
+      return action.payload;
+    default:
+      return state;
+  }
+};

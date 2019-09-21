@@ -1,3 +1,5 @@
+import { addSoap, deleteSoap, getAllSoaps, updateSoap } from "./xml/requests";
+
 export interface ISoap {
   id: number;
   name: string;
@@ -5,13 +7,16 @@ export interface ISoap {
   price: number;
 }
 
-export const requestAndResponseFromXML = (
-  xmlRequest: string
-): Promise<ISoap[]> => {
+export const openXMLConnection = () => {
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "http://localhost:8080/ws", true);
+  xhr.setRequestHeader("Content-Type", "text/xml");
+
+  return xhr;
+};
+export const getXmlAllSoaps = (): Promise<ISoap[]> => {
   return new Promise(resolve => {
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:8080/ws", true);
-    xhr.setRequestHeader("Content-Type", "text/xml");
+    const xhr = openXMLConnection();
     xhr.onreadystatechange = function() {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         const parser = new DOMParser();
@@ -33,6 +38,45 @@ export const requestAndResponseFromXML = (
       }
     };
 
-    xhr.send(xmlRequest);
+    xhr.send(getAllSoaps);
+  });
+};
+
+export const deleteXmlSoap = (id: number): Promise<void> => {
+  return new Promise(resolve => {
+    const deleteRequest = deleteSoap(id);
+    const xhr = openXMLConnection();
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 202) {
+        resolve();
+      }
+    };
+    xhr.send(deleteRequest);
+  });
+};
+
+export const updateXmlSoap = (soap: ISoap): Promise<void> => {
+  return new Promise(resolve => {
+    const updateRequest = updateSoap(soap);
+    const xhr = openXMLConnection();
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 202) {
+        resolve();
+      }
+    };
+    xhr.send(updateRequest);
+  });
+};
+
+export const addXmlSoap = (soap: ISoap): Promise<void> => {
+  return new Promise(resolve => {
+    const updateRequest = addSoap(soap);
+    const xhr = openXMLConnection();
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 202) {
+        resolve();
+      }
+    };
+    xhr.send(updateRequest);
   });
 };
