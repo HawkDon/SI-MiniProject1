@@ -30,8 +30,8 @@ public class RestWebService {
     }
 
     @RequestMapping( value = "/rest/addAnimal", method = RequestMethod.POST)
-    public void addAnimal(@RequestBody Animal animal) {
-        restRepository.addNewAnimal(animal);
+    public Animal addAnimal(@RequestBody Animal animal) {
+        return restRepository.addNewAnimal(animal);
     }
 
     @RequestMapping( value = "/rest/updateAnimal", method = RequestMethod.PUT)

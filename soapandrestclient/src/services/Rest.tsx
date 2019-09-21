@@ -23,7 +23,7 @@ export const deleteAnimal = (id: number): Promise<Response> =>
     }
   });
 
-export const addNewAnimal = (animal: IAnimal): Promise<Response> =>
+export const addNewAnimal = (animal: IAnimal): Promise<IAnimal> =>
   fetch(`/rest/addAnimal`, {
     method: "POST",
     headers: {
@@ -31,7 +31,7 @@ export const addNewAnimal = (animal: IAnimal): Promise<Response> =>
       Accept: "application/json"
     },
     body: JSON.stringify(animal)
-  });
+  }).then(response => response.json());
 
 export const updateAnimal = (animal: IAnimal): Promise<Response> =>
   fetch(`/rest/updateAnimal`, {

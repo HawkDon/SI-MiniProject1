@@ -22,6 +22,7 @@ xmlns:gs="http://www.baeldung.com/springsoap/gen" xmlns:art="http://www.baeldung
 <gs:price>${soap.price}</gs:price>
 </gs:soap>
 </art:addSoapRequest>
+<gs:addSoapResponse/>
 </soapenv:Body>
 </soapenv:Envelope>`;
 

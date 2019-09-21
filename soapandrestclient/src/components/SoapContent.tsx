@@ -74,7 +74,7 @@ const SoapContent: React.FC<Props> = ({ soaps, dispatch }) => {
 
   const handleAddSoap = () => {
     addXmlSoap(soap)
-      .then(() => dispatch({ type: "ADD_SOAP", payload: soap }))
+      .then(res => dispatch({ type: "ADD_SOAP", payload: res }))
       .then(() => dispatchSoap({ type: "RESET" }))
       .then(() => setIsNewSoap(false));
   };

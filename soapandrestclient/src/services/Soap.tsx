@@ -26,11 +26,14 @@ export const getXmlAllSoaps = (): Promise<ISoap[]> => {
         let soaps: ISoap[] = [];
         for (let index = 0; index < children.length; index++) {
           const element = children[index];
-          const id = parseInt(element.childNodes[0].childNodes[0].nodeValue!);
-          const name = element.childNodes[1].childNodes[0].nodeValue!;
-          const description = element.childNodes[2].childNodes[0].nodeValue!;
+          const id = parseInt(
+            element.childNodes[0].childNodes[0].nodeValue || ""
+          );
+          const name = element.childNodes[1].childNodes[0].nodeValue || "";
+          const description =
+            element.childNodes[2].childNodes[0].nodeValue || "";
           const price = parseInt(
-            element.childNodes[3].childNodes[0].nodeValue!
+            element.childNodes[3].childNodes[0].nodeValue || "0"
           );
           soaps = [...soaps, { id, name, description, price }];
         }
@@ -68,15 +71,29 @@ export const updateXmlSoap = (soap: ISoap): Promise<void> => {
   });
 };
 
-export const addXmlSoap = (soap: ISoap): Promise<void> => {
+export const addXmlSoap = (soap: ISoap): Promise<ISoap> => {
   return new Promise(resolve => {
-    const updateRequest = addSoap(soap);
+    const addRequest = addSoap(soap);
     const xhr = openXMLConnection();
     xhr.onreadystatechange = function() {
-      if (this.readyState === XMLHttpRequest.DONE && this.status === 202) {
-        resolve();
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        const parser = new DOMParser();
+        const docs = parser.parseFromString(this.response, "text/xml");
+        const id = parseInt(
+          docs.getElementsByTagName("ns2:id")[0].childNodes[0].nodeValue!
+        );
+        const name = docs.getElementsByTagName("ns2:name")[0].childNodes[0]
+          .nodeValue!;
+        const description = docs.getElementsByTagName("ns2:description")[0]
+          .childNodes[0].nodeValue!;
+        const price = parseInt(
+          docs.getElementsByTagName("ns2:price")[0].childNodes[0].nodeValue!
+        );
+        const soap = { id, name, description, price };
+
+        resolve(soap);
       }
     };
-    xhr.send(updateRequest);
+    xhr.send(addRequest);
   });
 };

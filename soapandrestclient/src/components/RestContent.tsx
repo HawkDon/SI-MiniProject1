@@ -81,7 +81,7 @@ const RestContent: React.FC<Props> = ({ animals, dispatch }) => {
 
   const handleAddAnimal = () => {
     addNewAnimal(animal)
-      .then(() => dispatch({ type: "ADD_ANIMAL", payload: animal }))
+      .then(res => dispatch({ type: "ADD_ANIMAL", payload: res }))
       .then(() => dispatchAnimal({ type: "RESET" }))
       .then(() => setIsNewAnimal(false));
   };

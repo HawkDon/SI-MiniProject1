@@ -45,9 +45,10 @@ public class RestRepository {
         restRepository.replace(animal.getId(), animal);
     }
 
-    public void addNewAnimal(Animal newAnimal) {
+    public Animal addNewAnimal(Animal newAnimal) {
         generatedId = generatedId + 1;
         newAnimal.setId(generatedId);
         restRepository.put(generatedId, newAnimal);
+        return newAnimal;
     }
 }

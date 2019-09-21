@@ -58,9 +58,10 @@ public class SoapRepository {
         soapRepository.replace(soap.getId(), soap);
     }
 
-    public void addNewSoap(Soap newSoap) {
+    public Soap addNewSoap(Soap newSoap) {
         generatedId = generatedId + 1;
         newSoap.setId(generatedId);
         soapRepository.put(generatedId, newSoap);
+        return newSoap;
     }
 }

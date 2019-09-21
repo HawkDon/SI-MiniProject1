@@ -53,9 +53,12 @@ public class SoapWebService {
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "addSoapRequest")
-    public void addSoap(@RequestPayload AddSoapRequest request) {
-        Soap soap = request.getSoap();
-        soapRepository.addNewSoap(soap);
+    @ResponsePayload
+    public AddSoapResponse addSoap(@RequestPayload AddSoapRequest request) {
+        AddSoapResponse soapResponse = new AddSoapResponse();
+        Soap soap = soapRepository.addNewSoap(request.getSoap());
+        soapResponse.setSoap(soap);
+        return soapResponse;
     }
 
 }
