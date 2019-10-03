@@ -17,7 +17,7 @@ export const openXMLConnection = () => {
 export const getXmlAllSoaps = (): Promise<ISoap[]> => {
   return new Promise(resolve => {
     const xhr = openXMLConnection();
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         const parser = new DOMParser();
         const docs = parser.parseFromString(this.response, "text/xml");
@@ -49,7 +49,7 @@ export const deleteXmlSoap = (id: number): Promise<void> => {
   return new Promise(resolve => {
     const deleteRequest = deleteSoap(id);
     const xhr = openXMLConnection();
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 202) {
         resolve();
       }
@@ -62,7 +62,7 @@ export const updateXmlSoap = (soap: ISoap): Promise<void> => {
   return new Promise(resolve => {
     const updateRequest = updateSoap(soap);
     const xhr = openXMLConnection();
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 202) {
         resolve();
       }
@@ -75,7 +75,7 @@ export const addXmlSoap = (soap: ISoap): Promise<ISoap> => {
   return new Promise(resolve => {
     const addRequest = addSoap(soap);
     const xhr = openXMLConnection();
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         const parser = new DOMParser();
         const docs = parser.parseFromString(this.response, "text/xml");

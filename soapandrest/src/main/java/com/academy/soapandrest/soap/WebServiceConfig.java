@@ -39,7 +39,7 @@ public class WebServiceConfig {
     }
 
     @Bean
-    public XsdSchema countriesSchema() {
+    public XsdSchema soapsSchema() {
         return new SimpleXsdSchema(new ClassPathResource("soaps.xsd"));
     }
 

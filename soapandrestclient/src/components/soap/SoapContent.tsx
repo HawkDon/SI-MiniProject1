@@ -1,30 +1,12 @@
-import {
-  Avatar,
-  Button,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemSecondaryAction,
-  ListItemText
-} from "@material-ui/core";
+import { Avatar, Button, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
 import UploadIcon from "@material-ui/icons/CloudUpload";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FolderIcon from "@material-ui/icons/Folder";
 import UpdateIcon from "@material-ui/icons/Update";
 import React from "react";
 import { useContentStyles } from "../../hooks/useStyles";
-import {
-  addXmlSoap,
-  deleteXmlSoap,
-  ISoap,
-  updateXmlSoap
-} from "../../services/soap/soapService";
-import {
-  changeSoapReducer,
-  initialSoapState,
-  SoapActions
-} from "../actions/soapActions";
+import { addXmlSoap, deleteXmlSoap, ISoap, updateXmlSoap } from "../../services/soap/soapService";
+import { changeSoapReducer, initialSoapState, SoapActions } from "../actions/soapActions";
 import SoapForm from "./SoapForm";
 
 interface Props {
@@ -121,14 +103,14 @@ const SoapContent: React.FC<Props> = ({ soaps, dispatch }) => {
       title="Add"
     />
   ) : (
-    <SoapForm
-      handleServerAction={handleUpdateSoap}
-      soap={soap}
-      dispatchSoap={dispatchSoap}
-      handleCancel={handleCancel}
-      title="Update"
-    />
-  );
+        <SoapForm
+          handleServerAction={handleUpdateSoap}
+          soap={soap}
+          dispatchSoap={dispatchSoap}
+          handleCancel={handleCancel}
+          title="Update"
+        />
+      );
 };
 
 export default SoapContent;
